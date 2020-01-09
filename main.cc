@@ -122,7 +122,7 @@ json handler(json& req)
 void update()
 {
     while (true) {
-        sleep(1);
+        sleep(10);
 
         pid_t pid = waitpid(-1, NULL, WNOHANG);
         if (pid == -1) {
@@ -144,8 +144,8 @@ void update()
             if (it == procs_.end()) {
                 cerr << "Error: entry not found" << endl;
             } else {
-                if ((*it)["retry_count"] >= 10) {
-                    cerr << "10 retries done already. Giving up" << endl;
+                if ((*it)["retry_count"] >= 20) {
+                    cerr << "20 retries done already. Giving up" << endl;
                     procs_.erase(it);
                 } else {
                     pid_t new_pid = start_repeater((*it)["src"], (*it)["dst"]);
